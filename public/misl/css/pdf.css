@@ -1,0 +1,8 @@
+@font-face{
+	font-family: Pyidaungsu;
+	src: url('../fonts/Pyidaungsu.ttf');
+}
+body, *{
+	font-family: Pyidaungsu;
+  /*font-size: 14px !important;*/
+}

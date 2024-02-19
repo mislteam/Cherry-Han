@@ -1,0 +1,29 @@
+@page { size: A4; }
+@font-face{
+	font-family: Pyidaungsu;
+	src: url('../fonts/Pyidaungsu.ttf');
+}
+body,*{
+	font-family: Pyidaungsu;
+  	font-size: 16px !important;
+	margin-top: 7px !important;
+	max-height:297mm;
+	
+}
+.imgqr {
+
+	bottom: 75 !important;
+	/*left: -10;*/
+	z-index: 999;
+	
+}
+/*.img-thumbnail {
+    background-color: #fff;
+    border:none !important; 
+    border-radius: .25rem !important;
+   
+}*/
+/*.qrimg{
+	width: 20% !important;
+	height: 20% !important;
+}*/
