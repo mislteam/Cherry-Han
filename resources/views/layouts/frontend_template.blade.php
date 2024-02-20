@@ -1,13 +1,15 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
     <!-- Car Detail Css -->
     <link href="{{asset('misl/back/plugins/slick/slick.css')}}" rel="stylesheet">
     <link href="{{asset('misl/back/plugins/slick/slick-theme.css')}}" rel="stylesheet">
@@ -16,44 +18,127 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link href="{{asset('misl/css/select2/select2-bootstrap4.min.css')}}" rel="stylesheet">
     <link href="{{asset('misl/css/select2/select2.min.css')}}" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Car Detail Css End -->
-    <title><?php echo translate('system_name'); ?></title>
+    <title>
+        <?php echo translate('system_name'); ?>
+    </title>
     <style type="text/css">
         .navbar-dark .navbar-nav .nav-link:hover {
             text-decoration: none;
             color: #ea068d;
         }
-        .navbar-dark .navbar-nav .nav-link.active{
+
+        .navbar-dark .navbar-nav .nav-link.active {
             color: #ea068d;
         }
-      
+
         .banner_bgimage {
-          height: 250px;
-          box-shadow:inset 0 0 0 2000px rgba(0, 0, 0, 0.3);
+            height: 250px;
+            box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.3);
 
         }
-      
+
+        .desktop-navbar {
+            display: block !important;
+        }
+
+        .mobile-navbar {
+            display: none !important;
+        }
+
+        .mobile-carousel{
+            display: none !important;
+        }
+
+        .mobile-header{
+            display: none !important;
+        }
+
         @media (max-width: 768px) {
-            .mobile-car-view{
+            .mobile-car-view {
                 display: inline-block;
             }
 
-            .card{
+            .card {
                 width: 125px !important;
                 height: 100px !important;
-                display: inline-block;
+                display: inline-block !important;
                 margin: 2px;
             }
-    }
-  
+
+            /* Hide the top navbar on mobile */
+            .desktop-navbar {
+                display: none !important;
+            }
+
+            /* Show the bottom navbar on mobile */
+            .mobile-navbar {
+                display: block !important;
+            }
+
+            .mobile-carousel{
+                display: block !important;
+            }
+
+            .mobile-header{
+                display: flex !important;
+            }
+
+            /* Adjustments for mobile bottom navbar */
+            .mobile-navbar {
+                position: fixed;
+                bottom: -1px;
+                left: 0;
+                display: flex !important;
+                width: 100%;
+                background-color: #333;
+                padding: 5px;
+                color: white;
+                text-align: center;
+                z-index: 1000;
+                /* Ensure it's above other content */
+            }
+
+             /* Custom CSS for card container */
+            .card-container {
+                display: flex;
+                overflow-x: auto; /* Enable horizontal scrolling */
+            }
+
+            .mobile-card {
+                flex: 0 0 auto; /* Allow cards to grow and shrink */
+                width: 60px; /* Set a fixed width for each card */
+                height: 60px;
+                margin-right: 15px; /* Adjust spacing between cards */
+                /* Customize card styles as needed */
+                border: 1px solid #ddd;
+                border-radius: 50%;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+            }
+
+            .mobile-card:last-child {
+                margin-right: 0;
+            }
+
+            .mobile-card:hover {
+                transform: scale(1.05);
+            }
+        }
     </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+</head>
+
+<body>
+    {{-- desktop nav start--}}
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 desktop-navbar">
         <div class="container-lg">
             <a class="navbar-brand" href="#">Cherry Han</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <?php $segment = Request::segment(2); ?>
@@ -63,31 +148,40 @@
                         <a class="nav-link {{ ($segment =='' ) ? 'active':''}}" href="{{ route('frontend') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ ($segment =='delivery-booking' ) ? 'active':''}}" href="{{ route('deliverybookingIndex') }}">Delivery Booking</a>
+                        <a class="nav-link {{ ($segment =='delivery-booking' ) ? 'active':''}}"
+                            href="{{ route('deliverybookingIndex') }}">Delivery Booking</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ ($segment =='tour-destination' ) ? 'active':''}}" href="{{ route('tourdestination') }}">Tour Destination</a>
+                        <a class="nav-link {{ ($segment =='tour-destination' ) ? 'active':''}}"
+                            href="{{ route('tourdestination') }}">Tour Destination</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ ($segment =='tours' ) ? 'active':''}}" href="{{ route('tours') }}">Travel & Tours</a>
+                        <a class="nav-link {{ ($segment =='tours' ) ? 'active':''}}" href="{{ route('tours') }}">Travel
+                            & Tours</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ ($segment =='hotel' ) ? 'active':''}}" href="{{ route('hotel') }}">Hotel</a>
+                        <a class="nav-link {{ ($segment =='hotel' ) ? 'active':''}}"
+                            href="{{ route('hotel') }}">Hotel</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ ($segment =='busticket' ) ? 'active':''}}" href="{{ route('busticket') }}">Bus Ticket</a>
-                    </li> 
-                    <li class="nav-item">
-                        <a class="nav-link {{ ($segment =='cars' ) ? 'active':''}}" href="{{ route('cars') }}">Car Rentals</a>
-                    </li> 
-                    <li class="nav-item">
-                        <a class="nav-link {{ ($segment =='container-servcie' ) ? 'active':''}}" href="{{ route('container') }}">Container</a>
+                        <a class="nav-link {{ ($segment =='busticket' ) ? 'active':''}}"
+                            href="{{ route('busticket') }}">Bus Ticket</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ ($segment =='cargo-service' ) ? 'active':''}}" href="{{ route('cargo') }}">Cargo</a>
+                        <a class="nav-link {{ ($segment =='cars' ) ? 'active':''}}" href="{{ route('cars') }}">Car
+                            Rentals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ ($segment =='user-register' ) ? 'active':''}}" href="{{ route('userregisterAdd') }}">Customer</a>
+                        <a class="nav-link {{ ($segment =='container-servcie' ) ? 'active':''}}"
+                            href="{{ route('container') }}">Container</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ ($segment =='cargo-service' ) ? 'active':''}}"
+                            href="{{ route('cargo') }}">Cargo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ ($segment =='user-register' ) ? 'active':''}}"
+                            href="{{ route('userregisterAdd') }}">Customer</a>
                     </li>
                     <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
@@ -101,17 +195,37 @@
             </div>
         </div>
     </nav>
+    {{-- desktop nav start--}}
+
+    {{-- mobile nav start--}}
+    <nav class="mobile-header navbar">
+        <div>
+            <img src="{{ asset('images/logo/ch-ico.jpg') }}" class="w-50 h-50"  alt="mobile-logo">
+        </div>
+        <div class="d-flex">
+            <a href="#" class="nav-link " style="color: #ea068d"><i class="fa-solid fa-circle-user"></i></a>
+            <a href="#" class="nav-link " style="color: #ea068d"><i class="fa-solid fa-bell"></i></a>
+        </div>
+    </nav>
+    <nav class="navbar mobile-navbar">
+        <a href="#" class="nav-link text-white"><i class="fa-solid fa-house-chimney"></i></a>
+        <a href="#" class="nav-link text-white"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="nav-link text-white"><i class="fa-brands fa-square-facebook"></i></a>
+        <a href="#" class="nav-link text-white"><i class="fa-solid fa-envelope"></i></a>
+        <a href="#" class="nav-link text-white"><i class="fa-solid fa-circle-user"></i></a>
+    </nav>
+    {{-- mobile nav end --}}
 
     <!-- Optional JavaScript; choose one of the two! -->
-    <div class="wrapper position-ref container-lg mt-4 mobile-view"> 
+    <div class="wrapper position-ref container-lg mt-1 mobile-view">
 
-    @yield('content')
-    
+        @yield('content')
+
 
     </div>
-     
 
-    
+
+
     <script src="{{ asset('misl/back/js/jquery.min.js') }}"></script>
     <script src="{{ asset('misl/js/bootstrap.min.js') }}"></script>
 
@@ -119,7 +233,9 @@
     <script src="{{ asset('misl/back/js/ajax_script.js') }}"></script>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
 
     <!-- Car Detail Js -->
 
@@ -129,7 +245,7 @@
     <!-- Car Detail Js -->
 
     <script type="text/javascript">
-      $(document).ready(function (){
+        $(document).ready(function (){
 
         $('.alert-success').hide();
         $('.alert-danger').hide();
@@ -266,7 +382,7 @@
     </script>
 
     <script type="text/javascript">
-    $(document).ready(function (){
+        $(document).ready(function (){
         $(document).on('click', '.add-to-cart', function () {   
         
             var sender_name = $('#sender_name').val();
@@ -309,6 +425,7 @@
                         
         });
     });
-</script>
-  </body>
+    </script>
+</body>
+
 </html>
